@@ -61,7 +61,7 @@ M116 /Y P1 F10 ;moves in Y until the touch plate is hit
 G91 y-.5 F40 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
 g4 p.25; pauses a second
-#145=(ATAN(#5041/#5042))
+#145=(ATAN(#5042/#5041))
 
 m225 #100 "Angle is %f" #145
 #2400=#145 ; sets the axis angle
