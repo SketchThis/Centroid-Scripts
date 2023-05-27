@@ -1,4 +1,5 @@
 <vcp_button>
+<skin_event_num>18</skin_event_num>
 	<plc_input>
 		<number>7</number>
 		<image_on>probe_trip.svg</image_on>

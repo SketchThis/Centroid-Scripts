@@ -1,0 +1,115 @@
+;------------------------------------------------------------------------------
+; Filename: mfunc46.mac
+; Set XY Zero at Current Position macro
+; Description: User Customizable Macro
+; Notes:  GCnC 2/8/18
+; Requires: 
+;------------------------------------------------------------------------------
+
+IF #50010                        ;Prevent lookahead from parsing past here
+IF #4201 || #4202 THEN GOTO 2000 ;Skip macro if graphing or searching
+
+N10                             ;Insert your code between N100 and N1000  
+M200 "Let's calibrate that laser offset"
+
+
+N110
+G4 P1     ;pause
+  
+
+N120
+;Magic Touch Plate
+
+#100=1;touch off plate thickness
+#101=2.2;touch plate width height
+#103=0 ;reserved for x width minus
+#104=0 ;reserved for x width plus
+#105=0 ;reserved for x plate travel
+#106=0 ;reserved for bit diameter
+
+#108=10 ;feedrate for moves
+
+#109=0 ;reserved for y width minus
+#110=0 ;reserved for y width plus
+#111=0 ;reserved for user corner choice
+
+#112=0 ;reserved for asking about z zeroing
+#113=1 ;z plate thickness
+#114=0 ;z location for zeroing to top of plate
+
+#115=0 ;Bit that we can flip for first and second part of zeroing
+
+G43H#4120 ;set tool height to current tool (just in case it got reset)
+
+;GOTO 200
+
+M200 "Secure the plate\nPut the bit inside the plate\n To start zeroing press CS"
+
+n121
+
+M115 /Z P1 F30 ;moves down in Z until the touch plate is hit
+G91 z0.25 F60 ;moves up a bit so we can hit the switch again in incremental mode
+G90 ;goes back to absolute position
+M115 /Z P1 F10 ;moves down in Z until the touch plate is hit
+
+G91 z0.0625 F60 ;moves up a bit so we can hit the switch again in incremental mode
+G90 ;goes back to absolute position
+
+n100
+;X position
+;X Minus
+M115 /x P6 F#108 ;Moves X Minus to side of plate
+G91 X0.0625 F60 ;moves off of plate
+M115 /x P6 F#108 ;Tap it again
+#103=#5021 ; Store the location of where we are on X
+G91 X0.0625 F60 ;moves off of plate
+
+;X plus
+M116 /x P6 F#108 ;Moves X Minus to side of plate
+G91 X-0.0625 F60 ;moves off of plate
+M116 /x P6 F#108 ;Tap it again
+#104=#5021 ; Store the location of where we are on X in machine coordinates
+;G91 X-0.0625 F60 ;moves off of plate
+
+;Figure out tool diameter
+#105 = ABS [#104 - #103] ;figure out how far we had to move to get across the touch plate
+;m200 "distance across plate is %f" #105
+#106 = [#101 - #105] ;get the difference between plate width VS actual travel (result is bit diameter)
+
+;m200 "Bit Diameter is %f" #106
+
+;Get in position for Y probe
+G91 X -[#105/2] F10 ;Gets us to the middle of the plate in Y
+G90 ;back to absolute
+
+;Y position
+;Y Minus
+M115 /y P6 F#108 ;Moves X Minus to side of plate
+G91 Y0.0625 F60 ;moves off of plate
+M115 /y P6 F#108 ;Tap it again
+#109=#5021 ; Store the location of where we are on Y
+G91 y[#105/2] ;move to the center of the plate
+g90
+IF #115 EQ 0 THEN #116=#5021 ELSE;record X machine position
+IF #115 EQ 0 THEN #117=#5022 ELSE;record Y machine posistion
+IF #115 EQ 0 THEN ELSE GOTO 300
+#115=1 ;Flip the bit so we can do some logic below to re-run this routine"
+m200 "Now we are in the center of the plate. On to laser"
+
+
+N200
+;ask the user where they want to zero to
+
+g90
+g53 Z0 ;go up
+m200 "Ok, press CS to lower the laser"
+M94 /65 ;deploy laser
+m200 "Put laser in the touch plate"
+goto 121 ;this gets us into the zeroing routine again
+
+n300
+#158=[#5021-#116] ;record location of X in permant storage
+#159=[#5022-#117] ;Record location of Y in permant storage
+m95/65 ;retract laser
+M200 "Laser offset figurd out. Saving as a permanant value"
+n2000

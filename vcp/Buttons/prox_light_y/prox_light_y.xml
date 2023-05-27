@@ -1,0 +1,11 @@
+<vcp_button>
+	<skin_event_num>73</skin_event_num>
+	<plc_input>
+		<number>4</number>
+		
+		<image_on>prox_light_y.svg</image_on>
+        <image_off>prox_light_y_on.svg</image_off>
+		
+
+	</plc_input>
+</vcp_button>

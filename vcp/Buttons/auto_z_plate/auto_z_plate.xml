@@ -1,3 +1,17 @@
 <vcp_button>
-	<skin_event_num>13</skin_event_num>
+	<skin_event_num>68</skin_event_num>
+	
+	<plc_input>
+		<number>6</number>
+		
+		<image_on>auto_z_plate_trig.svg</image_on>
+        <image_off>auto_z_plate.svg</image_off>
+		
+
+	</plc_input>
 </vcp_button>
+
+
+
+
+

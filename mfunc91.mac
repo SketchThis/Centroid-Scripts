@@ -1,0 +1,13 @@
+;MTC macro. This will ask the user which tool they are replacing and then guide them to replace it
+IF #50010                        ;Prevent lookahead from parsing past here
+IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
+M5; make sure the spindle is off!
+#100=5
+M224 #110 "Which tool are you inserting? %c\n Press Cycle Start to complete" #110 ;asks the user which tool and then stores that tool as value #110
+G43h#110 ;sets the active tool height to the tool that you just picked
+#10000=0; zeros that tool height. This is so you can remeasure the same tool number if you want.
+#150=0 ;clears out the stored tool
+T#110 ;sets the tool number to the number that the user wants
+T#110M6 ;tool measuring subroutine. Will measure the current tool which is the one we just picked
+N1000 ;end of macro
+

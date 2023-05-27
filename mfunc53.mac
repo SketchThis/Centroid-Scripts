@@ -1,5 +1,5 @@
 ;------------------------------------------------------------------------------
-; Filename: mfunc53.mac - Unused and Available for customization
+; Filename: mfunc53.mac - Spindle Warmup Routine
 ; M53 macro
 ; Description: User Customizable Macro
 ; Notes:
@@ -10,33 +10,21 @@
 IF #50010                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
-M225 #100 "This is an example macro named mfunc53.mac and can be found in ..\cncm or ..\cnct\nEdit it to include the desired functionality. Press Cycle Cancel/ESC to Exit"
+
 
 
 N100                             ;Insert your code between N100 and N1000  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#110=9000;starting rpm
+N200
+M3 S#110 ; turn spindle on to starting RPM
+G4 P2 ; pause
+#110=#110+100 ;add 100 rpm to the previously set rpm
+IF #110 LE 24000 THEN GOTO 200 ELSE GOTO 1000 ; if the rpm is less than 24000 keep going
 
 
 N1000                            ;End of Macro
+M5 ; turn off spindle
+
+

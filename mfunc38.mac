@@ -12,10 +12,14 @@ IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
 N100                             ;Insert your code between N100 and N1000
 IF [#159 < 1] THEN GOTO 1000	 ;Skip Macro if laser not in use
-M5 S0				 ;Turn Laser Off
-G4 P30.0			 ;Allow laser to cool
-M95 /37 /38                      ;Turn off Enable and PWM enable to Laser
-
-#159 = 0			 ;Reset Variable
+S0							 	 ;Turn Laser Off
+M95 /37                      ;Turn off Enable and PWM enable to Laser
+;#159 = 0						 ;Reset Variable
+M200 "retract laser"			 ;put something in here to retract the laser
+g52 x0 							 ;remove offset relative to laser and spindle
+g52 y0							 ;remove offset relative to laser and spindle
+G64 ON 					 ;Enable smoothing to preset 5
+G37 OFF							 ;PWM VM OFF (should have already been off but this is just in case)
 
 N1000                            ;End of Macro
+

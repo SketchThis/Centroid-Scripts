@@ -1,36 +1,66 @@
-;------------------------------------------------------------------------------
-; Filename: mfunc77.mac
-; SPINDLE WARM-UP
-; Description: User Customizable Macro
-; Notes:
-; Requires: 
-; Please see TB300 for tips on writing custom macros.
-;------------------------------------------------------------------------------
+;--------------------------------------------------------------------------------
+; Filename: mfunc58.mac 
+; M58 macro
+; Description: Provides Probing and ATC Functions when used with ProbeApp.exe 
+; Author: swissi
+;---------------------------------------------------------------------------------
+If #50001                                        ;Prevent lookahead from parsing past here
+If #4201 || #4202 Then GOTO 1000                 ;Skip macro if graphing or searching
 
-IF #50010                        ;Prevent lookahead from parsing past here
-IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
+N100
+#31999 = #4006                                   ;Store active units
+If #29500 == 40 Then #29501 = 40 Else #29501 = 0 ;Save Auto Mode override Flag as save_parameters will reset it
+G65 "c:\cncm\probing\probe_initialize.cnc" A99   ;Run Probe Initialization to check for Setup Errors (A99 = Don't check Inputs)
+G65 "c:\cncm\probing\probe_save_parameters.cnc"  ;Save CNC12 Parameters to make them available in ProbeApp
 
-N100                             ;Insert your code between N100 and N1000  
+If #50001                                        ;Prevent lookahead from parsing past here
+;---------------------------------------------------------------------------------
+;Possible ProbeApp Startup Options to directly open a specific Probing Cycle
+;---------------------------------------------------------------------------------
+M130 "C:\cncm\probing\ProbeApp.exe"               ;Startup ProbeApp Main Screen
+;M130 "C:\cncm\probing\ProbeApp.exe -ToolSetter"   ;Startup ProbeApp directly with Universal Tool Setter Screen
+;M130 "C:\cncm\probing\ProbeApp.exe -ToolOffSetter" ;Startup ProbeApp directly with Tool Libray Manager Screen
+;M130 "C:\cncm\probing\ProbeApp.exe -CornerPlate"  ;Startup ProbeApp directly with Corner Plate Screen
+;M130 "C:\cncm\probing\ProbeApp.exe -InCorPlate"   ;Startup ProbeApp directly with Square Plate Screen
+;M130 "C:\cncm\probing\ProbeApp.exe -BorePlate"    ;Startup ProbeApp directly with Bore Plate Screen
 
-G53 Z0
+N200
+G4 P1
+If #29501 == 40 Then GOTO 300                      ;Jump to Auto Mode
 
-G53 X12 Y20
+;+=============================================
+;|                     ProbeApp Script in Progress!"
+;|
+;|                 Press "Cycle Cancel" to terminate
+;+=============================================
+M200 "Press Cycle Start to run the ProbeApp Script\nPress Cycle Cancel to Exit"
 
-M3 S5000
-G4 P180
 
-S8000
-G4 P120
 
-S10000
-G4 P120
 
-S12000
-G4 P120
 
-S15000
-G4 P120
+N300
+IF #50001 ;sync
+G65 "c:\cncm\ncfiles\probing_cycle.cnc"
+IF #29500 == 40 && #30000 == 0 Then GOTO 200  ;loop as long as #30000 is 0
 
-M5
+; restore active unit of meassure after probing
+IF #50001 ;sync
+G[#31999]
 
-N1000                            ;End of Macro
+; Force ProbeApp to close in case it's still open
+IF #30000 == 0 THEN M130 "c:\cncm\probing\probe_close_ProbeApp.cmd"
+
+; display message if Cycle Start was pressed before Probing Cycle was created
+IF #30000 == 0 THEN M200 "Don't Press Cycle Start before ProbeApp has created the Probing Cycle!\n\nPress Cycle Start to Continue, Cycle Cancel to Abort"
+
+; display message if no Probing Cycle was created
+IF #30000 == -1 THEN M200 "No Probing Cycle was created!\n\nPress Cycle Start to Continue, Cycle Cancel to Abort"
+
+; display Error Message if Probing Cycle was aborted with Error
+IF #30000 > 1 THEN G65 "#301\probe_error.cnc" A[#30000]
+
+IF #30000 == -99 Then GOTO 100  ; -99 indicates to reopen ProbeApp after Cycle
+IF #50001   ;sync
+#29500 = 0  ;reset ProbeApp Startup Overwrite flag
+N1000	    ;End of Macro

@@ -2,7 +2,7 @@
 <ArrayOfVcpOption xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <VcpOption>
     <Name>Skin</Name>
-    <Value>acorn_router_vcp_skin</Value>
+    <Value>acorn_avid</Value>
   </VcpOption>
   <VcpOption>
     <Name>KeepOnTop</Name>
@@ -26,18 +26,18 @@
   </VcpOption>
   <VcpOption>
     <Name>Height</Name>
-    <Value>1040</Value>
+    <Value>1032</Value>
   </VcpOption>
   <VcpOption>
     <Name>Width</Name>
-    <Value>534</Value>
+    <Value>545</Value>
   </VcpOption>
   <VcpOption>
     <Name>Left</Name>
-    <Value>1386</Value>
+    <Value>3296</Value>
   </VcpOption>
   <VcpOption>
     <Name>Top</Name>
-    <Value>0</Value>
+    <Value>217</Value>
   </VcpOption>
 </ArrayOfVcpOption>

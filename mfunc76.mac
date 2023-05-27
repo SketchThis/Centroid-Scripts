@@ -1,15 +1,13 @@
 ;------------------------------------------------------------------------------
 ; Filename: mfunc76.mac
-; Description: Set XY zero locaiton using Laser Alignment cross hairs
-; Notes: Uses Parameters 560 and 561 for X & Y Offset Values.
+; Description: Set XY from Laser Alignment
+; Notes: IF Variables#102 and #103 are Zero, macro will prompt operator to input XY Offset for Laser.
 ; Requires: CNC12 V4.65+ ACORN
-; Revision Date:  27 Jan 2023
+; Revision Date: 22 MAR 2021
 ; Please see TB300 or the following link for tips on writing custom macros.
 ; https://www.centroidcnc.com/centroid_diy/downloads/acorn_documentation/centroid_cnc_macro_programming.pdf
 ;------------------------------------------------------------------------------
 ; Parameters:
-; #9560 = X-Axis Laser Offset
-; #9561 = Y-Axis Laser Offset
 ;
 ; System Variables:
 ;
@@ -19,25 +17,24 @@
 ; User Variables:
 ; #100 = Permanent M225 Message
 ; #101 = Timed M225 Message
+; #102 = X-Axis Laser Offset (User Should Set this Below)
+; #103 = Y-Axis Laser Offset (User Should set this Below)
 ;
 ;------------------------------------------------------------------------------
+
 IF #50001                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
-#101 = 5			;Length of time to wait for 1st M225 message
+;turns laser on low power for a laser pointer
+#100=#4120 ;records current tool number
+T99M6 ;changes to laser
+M200 "Laser about to fire on minimum power level"				
+M94 /37              ;Request Laser Enable
+M3 S-1				 ;Turn on Spindle and Set Speed to 0
 
-N100                             ;Insert your code between N100 and N1000
 
-M94 /29             ;Turn on LaserAlignActivate
-
-M201 "#)**MOVE CROSSHAIRS TO DESIRED LOCATION**\nThen Press Cycle Start to Set XY Zero"
-
-G92 X#9560 Y#9561
-
-;M25                ;Uncomment if you wish for Z to return to Home
-
-M95 /29				;turn off LaserAlignActivate
-
-;M225 #104 "#)**XY LOCATION SET**\nPRESS CYCLE START/ESC TO EXIT"
-
-N1000                            ;End of Macro
+G64 ON 					 		 ;Enable smoothing to preset 5
+G37 OFF							 ;PWM VM OFF (should have already been off but this is just in case)
+S2			 	     ;Set laser low
+M200 "Laser is on until you turn it off"
+T#100M6 ;changes back to original tool

@@ -1,7 +1,29 @@
-<svg id="New_VCP" data-name="New VCP" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <title>x_negative</title>
-  <text transform="translate(26.03 61.29) rotate(0.01) scale(1.01 1)" style="font-size: 31.199119567871094px;fill: #231f20;font-family: Arial-Black, Arial;font-weight: 800">X-</text>
-  <path d="M0,51.91,35.69,100H93.9A6,6,0,0,0,100,94V6a6,6,0,0,0-6.08-6h-59Z" style="fill: #ffc70e"/>
-  <path d="M38.66,37.41h7.71l4,6.87,3.9-6.87h7.63l-7,10.82,7.72,11.52H54.71l-4.47-7.18-4.47,7.18H38l7.81-11.64Z" style="fill: #231f20"/>
-  <line x1="65.77" y1="50" x2="82.2" y2="50" style="fill: none;stroke: #010101;stroke-miterlimit: 10;stroke-width: 5px"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-1845.67,-1912.99)">
+        <g id="Layer-1" serif:id="Layer 1">
+        </g>
+        <g transform="matrix(0.301848,0,0,0.582975,1602.86,856.296)">
+            <rect x="804.411" y="1812.59" width="993.877" height="514.602" style="fill:none;"/>
+            <clipPath id="_clip1">
+                <rect x="804.411" y="1812.59" width="993.877" height="514.602"/>
+            </clipPath>
+            <g clip-path="url(#_clip1)">
+                <g transform="matrix(1.75911e-16,-1.37431,2.87284,8.41521e-17,-6300.46,658.07)">
+                    <path d="M-1023.5,2477L-855,2797L-1192,2797L-1023.5,2477Z" style="fill:#ff1818;stroke:#000;stroke-width:9.98px;"/>
+                </g>
+                <g transform="matrix(3.31292,0,0,1.71534,3549.36,-3412.43)">
+                    <g transform="matrix(150,0,0,150,-685.852,3244.69)">
+                        <path d="M0.024,-0.716L0.268,-0.716L0.395,-0.496L0.518,-0.716L0.759,-0.716L0.536,-0.369L0.78,-0L0.531,-0L0.39,-0.23L0.249,-0L0.001,-0L0.249,-0.373L0.024,-0.716Z" style="fill-rule:nonzero;"/>
+                    </g>
+                </g>
+                <g transform="matrix(3.31292,1.7485e-17,7.63467e-18,1.71534,3292.39,-3332.55)">
+                    <g transform="matrix(150,0,0,150,-659.45,3182.11)">
+                        <rect x="0.022" y="-0.338" width="0.289" height="0.154" style="fill-rule:nonzero;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>

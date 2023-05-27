@@ -1,5 +1,5 @@
 ;------------------------------------------------------------------------------
-; Filename: mfunc54.mac - Unused and Available for customization
+; Filename: mfunc54.mac - Jogs Z all the way to machine zero (the top)
 ; M54 macro
 ; Description: User Customizable Macro
 ; Notes:
@@ -10,10 +10,42 @@
 IF #50010                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
-M225 #100 "This is an example macro named mfunc54.mac and can be found in ..\cncm or ..\cnct\nEdit it to include the desired functionality. Press Cycle Cancel/ESC to Exit"
+;-------------------------------------------------------------------------
+;THIS IS THE CHECK POSITION SECTION
+;Check Z
+n10
+m5			;Turn the spindle off
+g53 z0; get z all the way up
+G53 X0 Y0; lets get back to machine home
+
+#104=.0015 ;tolerance for axes error checking
+
+;start hitting prox switches
+M92/Z L1	;Move Z up and hit prox switch
+IF [[ABS #5023] LE #104] THEN #100 = 0 ELSE #100 = #5023								
+
+M91/Y L1	;Move Y over and hit prox switch
+IF [[[ABS #5022] - 1.5] LE #104] THEN #101 = 0 ELSE #101 = [#5022 + 1.5]
 
 
-N100                             ;Insert your code between N100 and N1000  
+M91/X L1	;Move Z up and hit prox switch
+IF [[ABS #5023] LE #104] THEN #102 = 0 ELSE #102 = #5021	
+
+IF [[#100 + #101 + #102] eq 0] then goto 1000 else goto 500
+
+N500; things are bad
+m200 "Location on these axes is off\nZ is off %f\n Y is off %f\nX is off %f" #100 #101 #102
+
+g53 z0; get z all the way up
+G53 X0 Y0; lets get back to machine home
+Goto 2000
+n1000 ;all good
+#105=5 ;time to show dialog
+g53 z0; get z all the way up
+G53 X0 Y0; lets get back to machine home
+m225 #105 "All axes locations within %f" #104
+
+N2000
 
 
 
@@ -39,4 +71,3 @@ N100                             ;Insert your code between N100 and N1000
 
 
 
-N1000                            ;End of Macro

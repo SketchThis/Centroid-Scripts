@@ -74,24 +74,24 @@ N20
 <SLAVE_INPUT> = ABS[<SLAVE_INPUT_STATE>]
 
 ; Save old travel limits
-;<OLD_AXIS_1_MINUS_LIMIT> = #23501
-;<OLD_AXIS_1_PLUS_LIMIT>  = #23601
-;<OLD_AXIS_2_MINUS_LIMIT> = #23502
-;<OLD_AXIS_2_PLUS_LIMIT>  = #23602
-;<OLD_AXIS_3_MINUS_LIMIT> = #23503
-;<OLD_AXIS_3_PLUS_LIMIT>  = #23603
-;<OLD_AXIS_4_MINUS_LIMIT> = #23504
-;<OLD_AXIS_4_PLUS_LIMIT>  = #23604
+<OLD_AXIS_1_MINUS_LIMIT> = #23501
+<OLD_AXIS_1_PLUS_LIMIT>  = #23601
+<OLD_AXIS_2_MINUS_LIMIT> = #23502
+<OLD_AXIS_2_PLUS_LIMIT>  = #23602
+<OLD_AXIS_3_MINUS_LIMIT> = #23503
+<OLD_AXIS_3_PLUS_LIMIT>  = #23603
+<OLD_AXIS_4_MINUS_LIMIT> = #23504
+<OLD_AXIS_4_PLUS_LIMIT>  = #23604
 
 ; Clear travel limits temporarily
-;#23501 = 0
-;#23601 = 0
-;#23502 = 0
-;#23602 = 0
-;#23503 = 0
-;#23603 = 0
-;#23504 = 0
-;#23604 = 0
+#23501 = 0
+#23601 = 0
+#23502 = 0
+#23602 = 0
+#23503 = 0
+#23603 = 0
+#23504 = 0
+#23604 = 0
 
 M225 #101 "Ensuring axes are paired..."
 M75
@@ -247,14 +247,14 @@ M75
 ; ------------ HOME AND SYNQ -----------------------------------------------------------------------------------------------------------------------------
 ; --------------------------------------------------------------------------------------------------------------------------------------------------------
 ; Restore old travel limits.
-;#23501 = <OLD_AXIS_1_MINUS_LIMIT>
-;#23601 = <OLD_AXIS_1_PLUS_LIMIT> 
-;#23502 = <OLD_AXIS_2_MINUS_LIMIT>
-;#23602 = <OLD_AXIS_2_PLUS_LIMIT> 
-;#23503 = <OLD_AXIS_3_MINUS_LIMIT>
-;#23603 = <OLD_AXIS_3_PLUS_LIMIT> 
-;#23504 = <OLD_AXIS_4_MINUS_LIMIT>
-;#23604 = <OLD_AXIS_4_PLUS_LIMIT>
+#23501 = <OLD_AXIS_1_MINUS_LIMIT>
+#23601 = <OLD_AXIS_1_PLUS_LIMIT> 
+#23502 = <OLD_AXIS_2_MINUS_LIMIT>
+#23602 = <OLD_AXIS_2_PLUS_LIMIT> 
+#23503 = <OLD_AXIS_3_MINUS_LIMIT>
+#23603 = <OLD_AXIS_3_PLUS_LIMIT> 
+#23504 = <OLD_AXIS_4_MINUS_LIMIT>
+#23604 = <OLD_AXIS_4_PLUS_LIMIT>
 
 M225 #101 "Setting home positions..."
 M26 /$<AXIS_1_LABEL> 

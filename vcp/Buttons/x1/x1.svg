@@ -1,8 +1,22 @@
-<svg id="New_VCP" data-name="New VCP" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <title>x1</title>
-  <rect width="100" height="100" rx="6" style="fill: #fff"/>
-  <g>
-    <path d="M33.11,42.07H40l2.39,4.61,2.78-4.61h6.36L46.35,50l5.49,8.66H45.12l-2.78-5.32-3.27,5.32H32.83L38.29,50Z" style="fill: #231f20"/>
-    <path d="M66.26,35.39V58.61H60.43V43.4a18.78,18.78,0,0,1-2.74,1.91,19.85,19.85,0,0,1-3.32,1.4v-5.2A13.48,13.48,0,0,0,58.94,39a10.27,10.27,0,0,0,2.55-3.61Z" style="fill: #231f20"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-2136.67,-1160.99)">
+        <g id="Layer-1" serif:id="Layer 1">
+        </g>
+        <g transform="matrix(0.301848,0,0,0.582975,1893.86,104.296)">
+            <rect x="804.411" y="1812.59" width="993.877" height="514.602" style="fill:none;"/>
+            <g transform="matrix(3.31292,0,0,1.71534,750.824,-2691.03)">
+                <rect x="27" y="2634" width="277" height="277" style="fill:#888;stroke:#000;stroke-width:8.33px;"/>
+            </g>
+            <g transform="matrix(3.31292,0,0,1.71534,-486.553,1840.04)">
+                <g transform="matrix(58.3333,0,0,58.3333,496.859,151.878)">
+                    <path d="M0.492,-0.728L0.492,-0L0.291,-0L0.291,-0.477C0.258,-0.452 0.226,-0.432 0.196,-0.417C0.166,-0.402 0.127,-0.387 0.082,-0.373L0.082,-0.536C0.149,-0.558 0.202,-0.584 0.239,-0.615C0.277,-0.645 0.306,-0.683 0.327,-0.728L0.492,-0.728Z" style="fill:#0b0a08;fill-rule:nonzero;"/>
+                </g>
+                <g transform="matrix(58.3333,0,0,58.3333,535.767,151.878)">
+                    <path d="M0.024,-0.716L0.268,-0.716L0.395,-0.496L0.518,-0.716L0.759,-0.716L0.536,-0.369L0.78,-0L0.531,-0L0.39,-0.23L0.249,-0L0.001,-0L0.249,-0.373L0.024,-0.716Z" style="fill:#0b0a08;fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
 </svg>

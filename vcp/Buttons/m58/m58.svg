@@ -1,10 +1,128 @@
-<svg id="New_VCP" data-name="New VCP" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <title>m58</title>
-  <rect width="100" height="100" rx="6" style="fill: #252d6b"/>
-  <text transform="translate(21.79 58.83)" style="font-size: 32.32002639770508px;fill: #fff;font-family: Arial-BoldMT, Arial;font-weight: 700">M58</text>
-  <g>
-    <path d="M24.08,58.83V35.69h7l4.2,15.78,4.15-15.78h7V58.83H42.09V40.62l-4.6,18.21H33L28.42,40.62V58.83Z" style="fill: #fff"/>
-    <path d="M50.15,52.88l4.42-.46a3.84,3.84,0,0,0,1.12,2.38,3.06,3.06,0,0,0,2.15.87,3,3,0,0,0,2.35-1.13,5.13,5.13,0,0,0,1-3.4A4.68,4.68,0,0,0,60.2,48a3.2,3.2,0,0,0-2.49-1.07,4.53,4.53,0,0,0-3.42,1.69l-3.6-.52L53,36H64.69v4.15H56.32l-.69,3.93a6.77,6.77,0,0,1,3-.74,6.65,6.65,0,0,1,5,2.14,7.72,7.72,0,0,1,2,5.57,8.31,8.31,0,0,1-1.66,5.1,7.34,7.34,0,0,1-6.26,3.06,7.73,7.73,0,0,1-5.22-1.72A7,7,0,0,1,50.15,52.88Z" style="fill: #fff"/>
-    <path d="M71.87,46.35a5,5,0,0,1-3.29-4.79,5.6,5.6,0,0,1,1.81-4.27,7.24,7.24,0,0,1,5.14-1.69,7.24,7.24,0,0,1,5.12,1.69,5.58,5.58,0,0,1,1.82,4.27,5.11,5.11,0,0,1-.83,2.87,5.37,5.37,0,0,1-2.36,1.92,6.13,6.13,0,0,1,2.93,2.25,6,6,0,0,1,1,3.43,7,7,0,0,1-2,5.21,7.44,7.44,0,0,1-5.44,2,8.18,8.18,0,0,1-5.25-1.66A6.46,6.46,0,0,1,68,52.22a6.64,6.64,0,0,1,.93-3.45A5.93,5.93,0,0,1,71.87,46.35Zm.5,5.44a4.08,4.08,0,0,0,.94,2.86,3.06,3.06,0,0,0,2.34,1,3,3,0,0,0,2.28-1,4.09,4.09,0,0,0,.9-2.85,3.66,3.66,0,0,0-.92-2.61,3,3,0,0,0-2.32-1,2.76,2.76,0,0,0-2.42,1.12A4.13,4.13,0,0,0,72.37,51.79Zm.41-9.91A2.8,2.8,0,0,0,73.53,44a3.08,3.08,0,0,0,4,0,2.81,2.81,0,0,0,.76-2.08,2.58,2.58,0,0,0-2.73-2.74,2.72,2.72,0,0,0-2,.76A2.68,2.68,0,0,0,72.78,41.88Z" style="fill: #fff"/>
-  </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 24.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="100px"
+   height="100px"
+   viewBox="0 0 100 100"
+   style="enable-background:new 0 0 100 100;"
+   xml:space="preserve"
+   id="svg30"
+   sodipodi:docname="m58.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   enable-background="new"><metadata
+   id="metadata36"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs34"><linearGradient
+     inkscape:collect="always"
+     id="linearGradient3815"><stop
+       style="stop-color:#1a1a1a;stop-opacity:1;"
+       offset="0"
+       id="stop3811" /><stop
+       style="stop-color:#1a1a1a;stop-opacity:0.05490196"
+       offset="1"
+       id="stop3813" /></linearGradient><filter
+     inkscape:collect="always"
+     style="color-interpolation-filters:sRGB"
+     id="filter3727"><feBlend
+       inkscape:collect="always"
+       mode="multiply"
+       in2="BackgroundImage"
+       id="feBlend3729" /></filter><linearGradient
+     inkscape:collect="always"
+     xlink:href="#linearGradient3815"
+     id="linearGradient4628"
+     x1="40.422737"
+     y1="25.213848"
+     x2="62.032909"
+     y2="24.790119"
+     gradientUnits="userSpaceOnUse" /></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1126"
+   inkscape:window-height="739"
+   id="namedview32"
+   showgrid="false"
+   inkscape:zoom="2.36"
+   inkscape:cx="-13.112703"
+   inkscape:cy="50"
+   inkscape:window-x="2288"
+   inkscape:window-y="166"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="layer2" />
+<style
+   type="text/css"
+   id="style2">
+	.st0{fill:#A6A5A5;}
+	.st1{display:none;fill:#FFFFFF;}
+	.st2{display:none;fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;}
+	.st3{display:none;fill:#82151E;}
+	.st4{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st5{fill:#FFFFFF;stroke:#010101;stroke-miterlimit:10;}
+</style>
+
+
+
+<g
+   inkscape:groupmode="layer"
+   id="layer1"
+   inkscape:label="Background"><rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1.44170713"
+     id="rect3715"
+     width="100"
+     height="100"
+     x="0"
+     y="0" /></g><g
+   inkscape:groupmode="layer"
+   id="layer2"
+   inkscape:label="Foreground"
+   style="filter:url(#filter3727)"><rect
+   style="enable-background:new 0 0 100 100;fill:url(#linearGradient4628);fill-opacity:1;opacity:0.93"
+   id="rect4100"
+   width="18.220339"
+   height="35.59322"
+   x="40.422737"
+   y="7.4172382" /><rect
+   style="enable-background:new 0 0 100 100;fill:#4d4d4d;fill-opacity:1"
+   id="rect4102"
+   width="2.118644"
+   height="23.728813"
+   x="48.897312"
+   y="43.01046" /><text
+   xml:space="preserve"
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.47896194px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.48697504"
+   x="5.8135171"
+   y="85.527527"
+   id="text4115"
+   transform="scale(0.96783299,1.0332361)"><tspan
+     sodipodi:role="line"
+     id="tspan4113"
+     x="5.8135171"
+     y="85.527527"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.2567234px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.48697504">ProbeApp</tspan></text>
+
+
+<circle
+   style="enable-background:new 0 0 100 100;fill:#ff0000;fill-opacity:1;opacity:0.84599995"
+   id="path4107"
+   cx="50"
+   cy="67.796608"
+   r="3.3898306" /></g></svg>

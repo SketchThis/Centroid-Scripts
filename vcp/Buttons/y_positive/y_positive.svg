@@ -1,10 +1,24 @@
-<svg id="New_VCP" data-name="New VCP" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <title>Y_positive</title>
-  <g>
-    <path d="M48.08,0,0,35.7V93.91A6.05,6.05,0,0,0,6,100H94a6.05,6.05,0,0,0,6-6.09v-59Z" style="fill: #ffc70e"/>
-    <g>
-      <path d="M29.82,39.41h7.67L42,47.06l4.51-7.65h7.62L45.44,52.58v9.49H38.52V52.58Z" style="fill: #231f20"/>
-      <path d="M56,48.27h5.84v-6h4.92v6h5.87v5H66.75v5.92H61.83V53.26H56Z" style="fill: #231f20"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-2168.32,-1540.99)">
+        <g id="Layer-1" serif:id="Layer 1">
+        </g>
+        <g transform="matrix(0.301848,0,0,0.582975,1925.51,484.296)">
+            <rect x="804.411" y="1812.59" width="993.877" height="514.602" style="fill:none;"/>
+            <g transform="matrix(2.65427,6.92971e-18,1.33837e-17,1.48748,4005.92,-1861.16)">
+                <path d="M-1023.5,2477L-855,2797L-1192,2797L-1023.5,2477Z" style="fill:#43c500;stroke:#000;stroke-width:9.98px;"/>
+            </g>
+            <g transform="matrix(3.31292,0,0,1.71534,3361.66,-3288.92)">
+                <g transform="matrix(150,0,0,150,-685.852,3244.69)">
+                    <path d="M0.001,-0.716L0.247,-0.716L0.391,-0.474L0.536,-0.716L0.78,-0.716L0.501,-0.3L0.501,-0L0.28,-0L0.28,-0.3L0.001,-0.716Z" style="fill-rule:nonzero;"/>
+                </g>
+            </g>
+            <g transform="matrix(3.31292,1.7485e-17,7.63467e-18,1.71534,3391.24,-3351.3)">
+                <g transform="matrix(150,0,0,150,-683.986,3182.11)">
+                    <path d="M0.062,-0.437L0.249,-0.437L0.249,-0.625L0.407,-0.625L0.407,-0.437L0.595,-0.437L0.595,-0.278L0.407,-0.278L0.407,-0.091L0.249,-0.091L0.249,-0.278L0.062,-0.278L0.062,-0.437Z" style="fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
     </g>
-  </g>
 </svg>

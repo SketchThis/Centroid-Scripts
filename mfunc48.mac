@@ -1,5 +1,5 @@
 ;------------------------------------------------------------------------------
-; Filename: mfunc48.mac - Unused and Available for customization
+; Filename: mfunc48.mac - MTC
 ; M48 macro
 ; Description: User Customizable Macro
 ; Notes:
@@ -13,6 +13,36 @@ IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 N100                             ;Insert your code between N100 and N1000  
 
 
+#100=1;touch off plate thickness
+
+G43H#4120 ;set tool height to current tool (just in case it got reset)
+IF [#10000 EQ 0] THEN GOTO 1000 ;if tool height is nearly zero bail out
+#2700 = 0 ;zero out the current WCS zero measurment
+
+M200 "Press CS and then tap the magnet to the plate to proceed\nThis ensures that your Z plate is working" 
+m101/50004 ;wait for the magnet to come off the plate
+
+;M200 "Jog the machine to where you want to measure the spoilboard from.\nPut the magnet on the bit the press CS\n To start zeroing tap the plate to the bit"
+m200 "tap cs to start z zero routine"
+;m103/10; lets give the operator 10 seconds to do this
+;m101/50006 ; this waits for the operator to tap thetouch off plate to the bit to start the routine
+g4 p.5; pauses a second
+;m104 ;cancel if they can't work this out in 10 seconds
+M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
+G91 z0.125 F40 ;moves up a bit so we can hit the switch again in incremental mode
+G90 ;goes back to absolute position
+M115 /Z P4 F5 ;moves down in Z until the touch plate is hit
+if #4120 EQ 99 THEN G92 Z[1+#157] ELSE G92 Z1 ;sets the z height to the bit or the laser (with the nozzle gap)
+;g92 z1 ;sets zero accounting for the thickness of the touch plate
+g00 G53 z0; This brings us back up to the highest Z can go so we don't smash up a bit
+GOTO 2000
+
+
+
+n1000
+m200 "Tool height invalid. Change tools, remeasure and try again"
+
+n2000
 
 
 
@@ -32,8 +62,3 @@ N100                             ;Insert your code between N100 and N1000
 
 
 
-
-
-
-
-N1000                            ;End of Macro

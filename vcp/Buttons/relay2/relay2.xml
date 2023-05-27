@@ -1,0 +1,8 @@
+<vcp_button>
+	<skin_event_num>14</skin_event_num>
+	<plc_output>
+		<number>3</number>
+		<image_on>relay2.svg</image_on>
+        <image_off>relay2_off.svg</image_off>
+    </plc_output>
+</vcp_button>

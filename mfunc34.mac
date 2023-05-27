@@ -10,9 +10,57 @@
 IF #50010                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
+
 N100                             ;Insert your code between N100 and N1000  
+M5; make sure the spindle is off!
+G43H#12000 ;set current height offset to the current tool number
 
-M95 /61                          ;Cancel Output 1
+;#101=#23503 ;record z axis max travel
+#23503=-99 ; set travel to we can reach touch off plate
 
-N1000                            ;End of Macro
+#100=#151;touch off disance above spoilboard
+
+G28 G91 Z0 X0 Y0 ;goto touch plate location. Ignores U/A axis
+;IF #4120 EQ 99 THEN m200 "adjust for laser"
+IF #4120 EQ 99 THEN g91 x#158 y#159 
+g90 ;go back to absolute
+
+;g53 z-3
+
+#100=3 ;timer for dialog boxes
+n101
+;IF [#50006 EQ 1] THEN goto 102 else goto 103
+;n102 m225 #100 "Take Magnet off of the plate and press CS"
+;m100/50006 ;wait for the magnet to come off the plate
+;n103
+;m225 #100 "magnet not on plate"
+
+M115 /Z P4 F30 ;moves down in Z until the touch plate is hit
+G91 z0.25 F60 ;moves up a bit so we can hit the switch again in incremental mode
+G90 ;goes back to absolute position
+M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
+#101=[#5023 - #151]; this should be the tool length to the spoilboard 5023 is machine coordinate of Z axis
+IF #4120 EQ 99 THEN #101=[#5023 - #151 + #157] ;this adds a little height for the laser focus 157 is where the nozzle gap is stored
+g00 G53 z0; This brings us back up to the highest Z can go so we don't smash up a bit
+#10000=#101 ;Set's tool height for active tool
+
+;Clenup tool heights for tools that aren't installed
+IF #4120 EQ 99 THEN GOTO 1000
+IF [#4120 NE 1] THEN #10001=0
+IF [#4120 NE 2] THEN #10002=0
+IF [#4120 NE 3] THEN #10003=0
+IF [#4120 NE 4] THEN #10004=0
+IF [#4120 NE 5] THEN #10005=0
+IF [#4120 NE 6] THEN #10006=0
+IF [#4120 NE 7] THEN #10007=0
+IF [#4120 NE 8] THEN #10008=0
+IF [#4120 NE 9] THEN #10009=0
+IF [#4120 NE 10] THEN #10010=0
+IF [#4120 NE 11] THEN #10011=0
+IF [#4120 NE 12] THEN #10012=0
+;IF [#4120 NE 99] THEN #10012=0
+
+;#25503=#101 ; restore z axis travel
+
+N1000 
 

@@ -1,0 +1,30 @@
+;This measures the distance from the tool touch off to the spoilboard and stores that in value 151
+
+IF #50010                        ;Prevent lookahead from parsing past here
+IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
+
+N100                             ;Insert your code between N100 and N1000  
+
+G43H#12000 ;set current height offset to the current tool number
+#100=#151;touch off disance above spoilboard
+
+m200 "Hold on to your butts, we're going to calibrate the spoilboard location"
+
+G28 ;goto touch plate location
+
+g53 z-3
+
+M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
+G91 z0.25 F40 ;moves up a bit so we can hit the switch again in incremental mode
+G90 ;goes back to absolute position
+M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
+#101=#5023; this should be the tool length to the spoilboard
+
+g0 g53 z0
+M200 "Drive to the spoilboard with the bit just touching it"
+#102=#5023
+#151=ABS [#101 - #102]
+#103=3 ;time to show dialog
+m225 /6 #103 "Spoilboard is %f below the touch plate" #151 #300
+G0 g53 z0
+N1000 

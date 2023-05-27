@@ -42,8 +42,76 @@ IF #50001 ;Force lookahead to stop processing
 M5 ;Turn off spindle
 
 N100 ;Check to make sure a TT1 is correctly configured
+;Check for PLC input
+;If check if either parameter 11 or parameter 44 are > 0
+IF !#9011 && !#9044 THEN M225 #100 "No PLC input has been configured for the Tool Touch Off device.\nPlease enter the PLC input for the Tool Touch Off device in parameter 11\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF !#9011 && !#9044 THEN GOTO 100
 
-G65 "C:\cncm\system\tt_check_configuration.cnc"
+;Check if current plc input set in parameter 44 is between 1 & 8 if it is less <= 50000
+IF [#9044 > 8] && [#9044 <= 50000] THEN M225 #100 "The PLC input entered into parameter 44 in invalid.\nPlease enter a value of between 1 and 8 into parameter 44\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [#9044 > 8] && [#9044 <= 50000] THEN GOTO 100
+IF #50001 ;Force lookahead to stop processing
+
+;If parameter 44 is != 0 && < 50000, check if current plc input set in parameter 44 is between 1 & 8
+IF [[#9044 != 0] && [#9044 < 50000]] && [[#9044 < 1] || [#9044 > 8]] THEN M225 #100 "The PLC input entered into parameter 44 in invalid.\nPlease enter a value of between 1 and 8 into parameter 44\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [[#9044 != 0] && [#9044 < 50000]] && [[#9044 < 1] || [#9044 > 8]] THEN GOTO 100
+IF #50001
+
+;If parameter 44 is != 0 && >= 50000, check if current plc input set in parameter 44 is between 50001 & 50008
+IF [[#9044 != 0] && [#9044 >= 50000]] && [[#9044 < 50001] || [#9044 > 50008]] THEN M225 #100 "The PLC input entered into parameter 44 in invalid.\nPlease enter a value of between 1 and 8 into parameter 44\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [[#9044 != 0] && [#9044 >= 50000]] && [[#9044 < 50001] || [#9044 > 50008]] THEN GOTO 100
+IF #50001 ;Force lookahead to stop processing
+
+;If parameter 44 = 0 && parameter 11 < 50000, check if current plc input set in parameter 11 is between 1 & 8 if it is less <= 50000
+IF [#9044 == 0] && [#9011 < 50000] && [[#9011 < 1] || [#9011 > 8]] THEN M225 #100 "The PLC input entered into parameter 11 in invalid.\nPlease enter a value of between 1 and 8 into parameter 11\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [#9044 == 0] && [#9011 < 50000] && [[#9011 < 1] || [#9011 > 8]] THEN GOTO 100
+
+;If parameter 44 = 0 && parameter 11 >= 50000, check if current plc input set in parameter 11 is between 50001 & 50008
+IF [#9044 == 0] && [#9011 >= 50000] && [[#9011 < 50001] || [#9011 > 50008]] THEN M225 #100 "The PLC input entered into parameter 11 in invalid.\nPlease enter a value of between 1 and 8 into parameter 11\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [#9044 == 0] && [#9011 >= 50000] && [[#9011 < 50001] || [#9011 > 50008]] THEN GOTO 100
+IF #50001 ;Force lookahead to stop processing
+
+;Check that touch off device height has been set if Enabled in Parameter 43
+IF [#9043 % 2] == 1 THEN #105 = 1
+IF #9071 == 0 && #105 == 1 THEN M225 #100 "The height for the tool touch off device has not been set in parameter 71.\nPlease measure the height of your tool touch off device and enter it parameter 71\nPress Cycle Cancel to end job now."
+IF #9071 != 0 && #105 == 0 THEN M225 #100 "The height for the tool touch off device has been set in parameter 71.\nPlease Enable Subtract TT Height or zero parameter 71.\nPress Cycle Cancel to end job now."
+IF #50001 ;Force lookahead to stop processing
+IF [#9071 == 0 && #105 == 1] || [#9071 != 0 && #105 == 0] THEN GOTO 100
+
+IF #50001 ;Force lookahead to stop processing
+IF #9044 != 0 THEN #104 = #9044 ;Set TT1 input to value in parameter 44 if it's not = to 0.
+IF #50001 ;Force lookahead to stop processing
+IF #9044 == 0 THEN #104 = #9011 ;Set TT1 input to value in parameter 11 if parameter 44 = 0.
+IF #50001 ;Force lookahead to stop processing
+
+IF #104 > 50000 THEN #104 = #104 - 50000
+IF #50001 ;Force lookahead to stop processing
+;Check/set probing rates
+IF [#9014 == 0] && [#4006 == 20] THEN #102 = 10 ;If fast probing rate = 0, set to default 10"/min
+IF #50001 ;Force lookahead to stop processing
+IF [#9014 != 0] && [#4006 == 20] THEN #102 = #9014 ;If fast probing rate != 0, set to value in #9014
+IF #50001 ;Force lookahead to stop processing
+
+IF [#9014 == 0] && [#4006 == 21] THEN #102 = 254 ;If fast probing rate = 0, set to default 254mm/min
+IF #50001 ;Force lookahead to stop processing
+IF [#9014 != 0] && [#4006 == 21] THEN #102 = #9014 ;If fast probing rate != 0, set to value in #9014
+IF #50001 ;Force lookahead to stop processing
+
+IF [#9015 == 0] && [#4006 == 20] THEN #103 = 1 ;If slow probing rate = 0, set to default 1"/min
+IF #50001
+IF [#9015 != 0] && [#4006 == 20] THEN #103 = #9015 ;If slow probing rate != 0, set to value in #9015
+IF #50001
+;Force lookahead to stop processing
+IF [#9015 == 0] && [#4006 == 21] THEN #103 = 25.4 ;If slow probing rate = 0, set to default 25.4 mm/min
+IF #50001 ;Force lookahead to stop processing
+IF [#9015 != 0] && [#4006 == 21] THEN #103 = #9015 ;If slow probing rate != 0, set to value in #9015
+IF #50001 ;Force lookahead to stop processing
 
 N200
 

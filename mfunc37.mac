@@ -1,7 +1,7 @@
 ;------------------------------------------------------------------------------
 ; Filename: mfunc37.mac
 ; Custom macro
-; Description: J-TECH Laser Enable
+; Description: Avid 15w laser enable
 ; Notes:
 ; Requires: v4.52 Acorn
 ; Please see TB300 for tips on writing custom macros.
@@ -11,14 +11,17 @@ IF #50010                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
 N100                             ;Insert your code between N100 and N1000 
+;t12m6				;call for laser
 
-M5 S-1				 ;Turn off Spindle and Set Speed to 0
-#159 = 1			 ;Set Variable for M38
-M94 /37                          ;Request Laser Enable
-M94 /38				 ;Request Laser PWM Enable
-M94 /39				 ;Request Laser Reset
-G4 P.5				 ;Pause
-M95 /39				 ;Turn off Reset 
+G53 Z0 ;run all the way up to the top
+m200 "Deploy the laser!!"
+;code to deploy laser down
+
+S0			 	     ;Set laser power to zero
+;#159 = 1			 ;Set Variable for M38
+M94 /37              ;Request Laser Enable
 M3 S-1				 ;Turn on Spindle and Set Speed to 0
+G64 OFF ;Disable smoothing
+G37 ON ;laser pwm on
 
 N1000                            ;End of Macro
