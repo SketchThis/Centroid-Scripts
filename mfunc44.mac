@@ -1,0 +1,68 @@
+;------------------------------------------------------------------------------
+; Filename: mfunc44.mac
+; Description: Set Z with TT at current location.
+; Notes: Uses Parameter 44 or 11 (if 44 not used) for detect signal.
+;	 Checks Relevant Parameters before starting Probe Cycle.
+; Requires: CNC12 V4.60 ACORN
+; Revision Date: 22 MAR 2022
+; Please see TB300 for tips on writing custom macros.
+;------------------------------------------------------------------------------
+; Parameters Used:
+; #9011 = Probe PLC Input - Only used if P44 not Set
+; #9044 = TT PLC Input
+; #9013 = Distance to Retract During Probing
+; #9014 = Fast Probe Rate
+; #9015 = Slow Probe Rate
+; #9043 = Auto Tool Measurement - Add 1 = Subtract Height Using Parameter 71
+; #9071 = Tool Touch Device Height
+;
+; System Variables Used:
+; #4006 = Imperial or Metric - Imperial = 20, Metric = 21
+;
+; User Variables:
+; #100 = Set for Permanent M225 Messages
+; #101 = Timer for Temporary M225 Messages
+; #102 = Fast Probing Rate
+; #103 = Slow Probing Rate
+; #104 = TT PLC Input
+; #105 = Subtract TT height Enabled
+;
+;------------------------------------------------------------------------------
+IF #50001 ;Force lookahead to stop processing
+IF #4201 || #4202 THEN GOTO 1000 ;Skip when graphing or searching
+IF #50001 ;Force lookahead to stop processing
+
+#100 = 0
+#101 = 5
+#102 = 0
+#103 = 0
+#104 = 0
+#105 = 0
+
+M5 ;Turn off spindle
+
+N100 ;Check to make sure a TT1 is correctly configured
+
+G65 "C:\cncm\system\tt_check_configuration.cnc"
+
+N200
+
+M200 "#)Jog the cutter over the moveable TT on Z zero location\nRemove dust shroud\nPress Cycle Start to continue"
+
+N250 ;Probe TT1
+
+M115 /Z P[#104] F[#102] ;Move at fast probing rate until TT1 detected
+G91 Z#9013 F[#102] ;Move up the distance set in P13.
+M115 /Z P[#104]F[#103] ;Move at slow probing rate until TT1 detected
+G90
+
+G92 Z[ABS[#9071]] ;Set Z position to 0 + detector height stored in parameter 71
+G4 P0.5 ;Wait 0.5 seconds
+G53 Z0 ;Retract Z
+
+M225 #100 "#)Replace dust shroud\nPress Cycle Start to continue"
+
+N300
+IF #50001 ;Force lookahead to stop processing
+
+N1000 ;End of macro

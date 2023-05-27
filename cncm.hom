@@ -1,0 +1,38 @@
+N100 ;Check for an open home switch
+;First axis minus and plus
+IF #21301 == 0 THEN #111 = 9 ELSE #111 = #21301
+IF #21401 == 0 THEN #112 = 9 ELSE #112 = #21401
+IF [#20101 != 78] && [#21301 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20101 != 78] && [#21401 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20101 != 78] && [#21301 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
+IF [#20101 != 78] && [#21401 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+
+;Second axis minus and plus
+IF #21302 == 0 THEN #111 = 9 ELSE #111 = #21302
+IF #21402 == 0 THEN #112 = 9 ELSE #112 = #21402
+IF [#20102 != 78] && [#21302 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20102 != 78] && [#21402 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20102 != 78] && [#21302 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
+IF [#20102 != 78] && [#21402 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+
+;Third axis minus and plus
+IF #21303 == 0 THEN #111 = 9 ELSE #111 = #21303
+IF #21403 == 0 THEN #112 = 9 ELSE #112 = #21403
+IF [#20103 != 78] && [#21303 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20103 != 78] && [#21403 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20103 != 78] && [#21303 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
+IF [#20103 != 78] && [#21403 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+
+;Fourth axis minus and plus
+IF #21304 == 0 THEN #111 = 9 ELSE #111 = #21304
+IF #21404 == 0 THEN #112 = 9 ELSE #112 = #21404
+IF [#20104 != 78] && [#21304 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20104 != 78] && [#21404 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
+IF [#20104 != 78] && [#21304 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
+IF [#20104 != 78] && [#21404 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+IF #101 != 0 THEN GOTO 100
+
+;Perform Homing commands
+M26/X
+M26/Y
+M26/Z
