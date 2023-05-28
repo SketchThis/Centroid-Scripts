@@ -1,0 +1,24 @@
+;Fixed tool touch off boop script.
+;This script will guide the user to locating their fixed touch off plate.
+;By Eric Schimelpfenig
+
+
+IF #50010                        ;Prevent lookahead from parsing past here
+IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
+#100=1 ;Message time on screeen
+
+M200 "Welcome to the touch plate boop utility \n This utility will teach the controller where \n your fixed touch off plate is \n Press Cycle Start to continue"
+
+m200 "To start let's make sure your touch plate works \n Press cycle start and then press down on your plate to continue"
+
+N100
+M225 /6 #100 “Boop that touch plate \n So we know it works before proceeding \n Keep it pressed down until this message goes away”
+m101/[50000 + #9706] ;wait for touch off plate to be booped by hand
+
+m200 "Sweet! Your plate is working \n Drive over the touch plate using the jog keys \n or the pendant\n Then move down in Z until the plate is booped \n Press Cycle Start"
+m101/[50000 + #9706] ;wait for touch off plate to be booped by hand
+
+G10 P708 R#5021 ;Tool touch off X location 
+G10 P709 R#5022 ;Tool Touch off Y location 
+
+m200 "Nice!\n That location is now recorded. \n Have a great day"
