@@ -1,38 +1,75 @@
-N100 ;Check for an open home switch
-;First axis minus and plus
-IF #21301 == 0 THEN #111 = 9 ELSE #111 = #21301
-IF #21401 == 0 THEN #112 = 9 ELSE #112 = #21401
-IF [#20101 != 78] && [#21301 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20101 != 78] && [#21401 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20101 != 78] && [#21301 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
-IF [#20101 != 78] && [#21401 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+;!!Perform Homing commands The timer commands (m103) prevent the gantry from slamming if a prox switch is bad
 
-;Second axis minus and plus
-IF #21302 == 0 THEN #111 = 9 ELSE #111 = #21302
-IF #21402 == 0 THEN #112 = 9 ELSE #112 = #21402
-IF [#20102 != 78] && [#21302 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20102 != 78] && [#21402 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20102 != 78] && [#21302 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
-IF [#20102 != 78] && [#21402 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+IF #50010                        ;Prevent lookahead from parsing past here
 
-;Third axis minus and plus
-IF #21303 == 0 THEN #111 = 9 ELSE #111 = #21303
-IF #21403 == 0 THEN #112 = 9 ELSE #112 = #21403
-IF [#20103 != 78] && [#21303 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20103 != 78] && [#21403 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20103 != 78] && [#21303 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
-IF [#20103 != 78] && [#21403 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
+;----------------------------------------------------
+;This makes sure that the relays controlling my X1 and X2 axes are turned on before we move
+;----------------------------------------------------
 
-;Fourth axis minus and plus
-IF #21304 == 0 THEN #111 = 9 ELSE #111 = #21304
-IF #21404 == 0 THEN #112 = 9 ELSE #112 = #21404
-IF [#20104 != 78] && [#21304 != 0] && !#[50000 + [#111]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20104 != 78] && [#21404 != 0] && !#[50000 + [#112]] THEN M225 #100 "Home switch tripped!!!\nPlease clear before Homing.\n\nPress Cycle Cancel to end Homing"
-IF [#20104 != 78] && [#21304 != 0] && !#[50000 + [#111]] THEN #101 = #101 + 1
-IF [#20104 != 78] && [#21404 != 0] && !#[50000 + [#112]] THEN #101 = #101 + 1
-IF #101 != 0 THEN GOTO 100
+m95/114 ; enables the stepper on X2
+m95/113 ; enables the stepper on X1
 
-;Perform Homing commands
-M26/X
-M26/Y
-M26/Z
+;----------------------------------------------------
+;This will give the operator a chance to manually move the machine closer to home
+;----------------------------------------------------
+
+m200 "Jog the machine closer to home if you want then press/nCYCLE START"
+
+G64 ON ;enable smoothing
+
+;Get off x prox
+if #50002 EQ 0 THEN G91 X.125 ELSE 
+g90
+;Get off y prox
+if #50002 EQ 0 THEN G91 Y.125 ELSE 
+g90
+;Get off z prox
+if #50002 EQ 0 THEN G91 Z-.125 ELSE 
+g90
+;Get off rotary prox
+;if #50002 EQ 0 THEN G91 Z.125 ELSE 
+;g90
+N310
+IF #50002 EQ 0 THEN m200 "Stuck on prox switches. Manually jog off and then try again"
+IF #50002 EQ 0 THEN GOTO 310
+
+N300
+;----------------------------------------------------
+;And finally...we home
+;----------------------------------------------------
+
+M92/Z L1 ;Move z up until we hit the prox switch
+;M26/Z ;Zero z here
+m105/y p2 f60 ;hit the y1 prox switch ;goes a little faster in case you are way down the table
+m106/y p-2 f60 ;hit the y1 prox switch ;goes a little faster in case you are way down the table
+M91/Y L1 ;Move y until we hit the prox switch
+;M26/Y ;zero y here temporarily so we don't trigger a travel limit (if machine was homed from a weird position)
+;g91 y1.5 ;move ahead 1.5 to avoid touch off plate
+;M26/Y ;zero y here
+
+;----------------------------------------------------
+;square and zero gantry 
+;----------------------------------------------------
+m105/x p2 f60 ;hit the x1 prox switch ;goes a little faster in case you are way down the table
+m106/x p-2 f10 ;moves the stepper on X1 off the its prox switch.
+m105/x p2 f25 ;hit the x1 prox switch
+m66 ; disables the stepper on X1
+m103/1 ;wait one second to see if we hit the prox switch 
+m106/x p-3 f10 ;moves the stepper on X2 off the its prox switch. (in case we are on it)
+m105/x p3 f25 ;move back in to hit the x2 prox switch
+m104 ;cancel previous timer
+m86 ; enables the stepper on X1
+m106/x p-2 f10 ;moves the stepper on X1 off the its prox switch.
+m106/x p-3 f10 ;moves the stepper on X2 off the its prox switch.
+M91/x L1 ;do the standard x homing on the prox switch
+M26/X ;zero gantry here
+M26/y ;zero gantry here
+M26/z ;zero gantry here
+M26/B ; zero rotary 
+
+m108/1 ;re-enable feedrate override
+;#23501=#100
+;#23502=#101
+;#23503=#102 ;return all travel limits to what they were
+;#2400=#103
+
