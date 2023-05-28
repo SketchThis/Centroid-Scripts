@@ -6,13 +6,13 @@ IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 N100                             ;Insert your code between N100 and N1000  
 
 G43H#12000 ;set current height offset to the current tool number
-#100=#151;touch off disance above spoilboard
+#100=#151;touch off disance above spoilboard (this is z plate thickness)
 
 m200 "Hold on to your butts, we're going to calibrate the spoilboard location"
 
 G28 ;goto touch plate location
 
-g53 z-3
+
 
 M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
 G91 z0.25 F40 ;moves up a bit so we can hit the switch again in incremental mode

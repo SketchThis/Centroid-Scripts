@@ -21,7 +21,24 @@ m101/[50000 + #9706] ;wait for touch off plate to be booped by hand
 G10 P708 R#5021 ;Tool touch off X location 
 G10 P709 R#5022 ;Tool Touch off Y location 
 
-m200 "Nice!\n That location is now recorded. \n Have a great day"
+m200 "Nice!\n That location is now recorded."
 
-;add in some code to prompt user to calibrate their spoilboard since they may have just moved
-;their fixed touch off plate
+IF #9713 EQ 0 THEN M224 #115 "Since you moved your tool height sensor\nYou should recalibrate your spoilboard.\nDo you want to do that now?\nY for Yes N for No" #115 ;asks the user which tool and then stores that tool as value #110
+IF #115 EQ N THEN GOTO 110 ELSE 
+IF #115 EQ Y THEN G65 mfunc90.mac ELSE
+
+N110
+G10 P9713 R0 ;We're zeroing out the spoilboard thickness
+			;WE do this because it's invalid now that we've moved the fixed touch off plate
+			;If they don't fix it now they'll be prompted to fix it later when they change
+			;tools
+			
+			
+N120 ;We have to zero out the heights of all tools because they are now invalid
+	;The M6 script will see that the tool heights are zero when it grabs a tool and will prompt
+	;for a remeasure
+#110=1
+#10001=#110 ;Zero's a tool height
+#110=#110+1 ;increment the tool number
+IF #110 LE 100 THEN GOTO 120 ELSE GOTO 1000 ; Keep zeroing tools until we get all 100
+N1000 ;We're done here.
