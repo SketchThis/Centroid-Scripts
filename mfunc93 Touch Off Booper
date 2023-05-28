@@ -5,7 +5,7 @@
 
 IF #50010                        ;Prevent lookahead from parsing past here
 IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
-#100=1 ;Message time on screeen
+#100=1 ;Message time on screen
 
 M200 "Welcome to the touch plate boop utility \n This utility will teach the controller where \n your fixed touch off plate is \n Press Cycle Start to continue"
 
@@ -22,3 +22,6 @@ G10 P708 R#5021 ;Tool touch off X location
 G10 P709 R#5022 ;Tool Touch off Y location 
 
 m200 "Nice!\n That location is now recorded. \n Have a great day"
+
+;add in some code to prompt user to calibrate their spoilboard since they may have just moved
+;their fixed touch off plate
