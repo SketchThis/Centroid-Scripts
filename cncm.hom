@@ -6,8 +6,8 @@ IF #50010                        ;Prevent lookahead from parsing past here
 ;This makes sure that the relays controlling my X1 and X2 axes are turned on before we move
 ;----------------------------------------------------
 
-m95/114 ; enables the stepper on X2
-m95/113 ; enables the stepper on X1
+m88 ; enables the stepper on Y2
+
 
 ;----------------------------------------------------
 ;This will give the operator a chance to manually move the machine closer to home
@@ -53,12 +53,12 @@ M91/Y L1 ;Move y until we hit the prox switch
 m105/x p2 f60 ;hit the x1 prox switch ;goes a little faster in case you are way down the table
 m106/x p-2 f10 ;moves the stepper on X1 off the its prox switch.
 m105/x p2 f25 ;hit the x1 prox switch
-m66 ; disables the stepper on X1
+m68 ; disables the stepper on X1
 m103/1 ;wait one second to see if we hit the prox switch 
 m106/x p-3 f10 ;moves the stepper on X2 off the its prox switch. (in case we are on it)
 m105/x p3 f25 ;move back in to hit the x2 prox switch
 m104 ;cancel previous timer
-m86 ; enables the stepper on X1
+m88 ; enables the stepper on X1
 m106/x p-2 f10 ;moves the stepper on X1 off the its prox switch.
 m106/x p-3 f10 ;moves the stepper on X2 off the its prox switch.
 M91/x L1 ;do the standard x homing on the prox switch
