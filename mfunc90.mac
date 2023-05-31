@@ -7,26 +7,26 @@ N100                             ;Insert your code between N100 and N1000
 
 G43H#12000 ;set current height offset to the current tool number
 #100=#9701;touch off disance above spoilboard (this is z plate thickness)
-
+;---------------------------------
+;Spoilboard calibration section
+;---------------------------------
+N200
 m200 "Hold on to your butts, we're going to calibrate the spoilboard location"
 
-
+;put in if statement here that bails out if you haven't calibrated your fixed touch plate
+g53 z0
 G53 X#9708 Y#9709 ;go to where the touch plate is
-
-
-
-M115 /Z P#9700 F10 ;moves down in Z until the touch plate is hit
+M105 /Z P-#9706 F10 ;moves down in Z until the tool touch off is hit
 G91 z0.25 F40 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
-M115 /Z P#9700 F10 ;moves down in Z until the touch plate is hit
+M105 /Z P-#9706 F10 ;moves down in Z until the touch plate is hit
 #101=#5023; this should be the tool length to the spoilboard
-
-g0 g53 z0
+g0 g53 z0 ;get all the way back up in z
 M200 "Drive to the spoilboard with the bit just touching it"
-#102=#5023
-
+#102=#5023 ;this is the location of the spoilboard surface
 G10 P713 R[ABS [#101 - #102]] ;Spoilboard location | "location" means the Z height of the spoilboard
+g53 z0;get all the way up
 #103=3 ;time to show dialog
-m225 /6 #103 "Spoilboard is %f below the touch plate" #151 #300
+m225 /6 #103 "Spoilboard is %f below the touch plate" #9713 #300
 G0 g53 z0
 N1000 
