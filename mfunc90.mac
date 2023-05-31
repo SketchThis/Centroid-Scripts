@@ -14,6 +14,7 @@ N200
 m200 "Hold on to your butts, we're going to calibrate the spoilboard location"
 
 ;put in if statement here that bails out if you haven't calibrated your fixed touch plate
+
 g53 z0
 G53 X#9708 Y#9709 ;go to where the touch plate is
 M105 /Z P-#9706 F10 ;moves down in Z until the tool touch off is hit
