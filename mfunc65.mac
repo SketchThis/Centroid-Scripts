@@ -12,6 +12,6 @@ IF #4201 || #4202 THEN GOTO 1000 ;Skip macro if graphing or searching
 
 N100                             ;Insert your code between N100 and N1000  
 
-M94 /65                          ;Request OUTPUT5
+M94 /[60 + #9721]                          ;Request OUTPUT5
 
 N1000                            ;End of Macro

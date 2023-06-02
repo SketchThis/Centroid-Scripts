@@ -1,8 +1,8 @@
 ;------------------------------------------------------------------------------
-; Filename: mfunc46.mac
+; Filename: mfunc92.mac
 ; Set XY Zero at Current Position macro
 ; Description: User Customizable Macro
-; Notes:  GCnC 2/8/18
+; Notes:  
 ; Requires: 
 ;------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ G4 P1     ;pause
 N120
 ;Magic Touch Plate
 
-#100=1;touch off plate thickness
+#100=#9701;touch off plate thickness
 #101=2.2;touch plate width height
 #103=0 ;reserved for x width minus
 #104=0 ;reserved for x width plus
@@ -47,10 +47,10 @@ M200 "Secure the plate\nPut the bit inside the plate\n To start zeroing press CS
 
 n121
 
-M115 /Z P1 F30 ;moves down in Z until the touch plate is hit
+M115 /Z P#9700 F30 ;moves down in Z until the touch plate is hit
 G91 z0.25 F60 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
-M115 /Z P1 F10 ;moves down in Z until the touch plate is hit
+M115 /Z P#9700 F10 ;moves down in Z until the touch plate is hit
 
 G91 z0.0625 F60 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
@@ -58,16 +58,16 @@ G90 ;goes back to absolute position
 n100
 ;X position
 ;X Minus
-M115 /x P6 F#108 ;Moves X Minus to side of plate
+M115 /x P#9700 F#108 ;Moves X Minus to side of plate
 G91 X0.0625 F60 ;moves off of plate
-M115 /x P6 F#108 ;Tap it again
+M115 /x P#9700 F#108 ;Tap it again
 #103=#5021 ; Store the location of where we are on X
 G91 X0.0625 F60 ;moves off of plate
 
 ;X plus
-M116 /x P6 F#108 ;Moves X Minus to side of plate
+M116 /x P#9700 F#108 ;Moves X Minus to side of plate
 G91 X-0.0625 F60 ;moves off of plate
-M116 /x P6 F#108 ;Tap it again
+M116 /x P#9700 F#108 ;Tap it again
 #104=#5021 ; Store the location of where we are on X in machine coordinates
 ;G91 X-0.0625 F60 ;moves off of plate
 
@@ -84,9 +84,9 @@ G90 ;back to absolute
 
 ;Y position
 ;Y Minus
-M115 /y P6 F#108 ;Moves X Minus to side of plate
+M115 /y p#9700 F#108 ;Moves X Minus to side of plate
 G91 Y0.0625 F60 ;moves off of plate
-M115 /y P6 F#108 ;Tap it again
+M115 /y p#9700 F#108 ;Tap it again
 #109=#5021 ; Store the location of where we are on Y
 G91 y[#105/2] ;move to the center of the plate
 g90
@@ -103,13 +103,17 @@ N200
 g90
 g53 Z0 ;go up
 m200 "Ok, press CS to lower the laser"
-M94 /65 ;deploy laser
+M94 /[60 + #9721] ;deploy laser
 m200 "Put laser in the touch plate"
 goto 121 ;this gets us into the zeroing routine again
 
 n300
-#158=[#5021-#116] ;record location of X in permant storage
-#159=[#5022-#117] ;Record location of Y in permant storage
-m95/65 ;retract laser
-M200 "Laser offset figurd out. Saving as a permanant value"
+;#158=[#5021-#116] ;record location of X in permant storage
+;#159=[#5022-#117] ;Record location of Y in permant storage
+
+G10 P715 R[#5021-#116] ;Laser X offset | X offset for laser
+G10 P716 R[#5022-#117] ;Laser Y offset | Y offset for laser
+
+m95/[60 + #9721] ;retract laser
+M200 "Laser offset figured out. Saving as a permanant value"
 n2000

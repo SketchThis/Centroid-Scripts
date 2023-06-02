@@ -16,6 +16,10 @@ m200 "Hold on to your butts, we're going to calibrate the spoilboard location"
 ;put in if statement here that bails out if you haven't calibrated your fixed touch plate
 
 g53 z0
+
+IF #9708 EQ -1 THEN GOTO 1100
+IF #9709 EQ -1 THEN GOTO 1100
+
 G53 X#9708 Y#9709 ;go to where the touch plate is
 M105 /Z P-#9706 F10 ;moves down in Z until the tool touch off is hit
 G91 z0.25 F40 ;moves up a bit so we can hit the switch again in incremental mode
@@ -30,4 +34,7 @@ g53 z0;get all the way up
 #103=3 ;time to show dialog
 m225 /6 #103 "Spoilboard is %f below the touch plate" #9713 #300
 G0 g53 z0
-N1000 
+goto 1200
+N1100; this is the section that throws an error if your touch off plate isn't calibrated
+m200 "You haven't setup your touch plate location yet\n Please run the touch plate calibration utility first."
+N1200

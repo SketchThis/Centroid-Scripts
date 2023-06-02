@@ -2,7 +2,7 @@
 ; Filename: mfunc46.mac
 ; Set XY Zero at Current Position macro
 ; Description: User Customizable Macro
-; Notes:  GCnC 2/8/18
+; Notes:  
 ; Requires: 
 ;------------------------------------------------------------------------------
 
@@ -22,8 +22,8 @@ GOTO 2000
 N120
 ;Magic Touch Plate
 
-#100=1;touch off plate thickness
-#101=2.2;touch plate width height
+#100=#9701;touch off plate thickness
+#101=#9702;touch plate width height
 #103=0 ;reserved for x width minus
 #104=0 ;reserved for x width plus
 #105=0 ;reserved for x plate travel
@@ -37,7 +37,7 @@ N120
 #111=0 ;reserved for user corner choice
 
 #112=0 ;reserved for asking about z zeroing
-#113=1 ;z plate thickness
+#113=#9701 ;z plate thickness
 #114=0 ;z location for zeroing to top of plate
 
 G43H#4120 ;set tool height to current tool (just in case it got reset)
@@ -45,14 +45,14 @@ G43H#4120 ;set tool height to current tool (just in case it got reset)
 ;GOTO 200
 
 M200 "Press Cycle Start and then tap the magnet to the plate to proceed\nThis ensures that your Z plate is working" 
-m101/50006 ;wait for the magnet to come off the plate
+m101/[50000 + #9700] ;wait for the magnet to come off the plate
 g4 p.25 ; fast pause
 
 
-M115 /Z P1 F30 ;moves down in Z until the touch plate is hit
+M115 /Z P#9700 F30 ;moves down in Z until the touch plate is hit
 G91 z0.25 F60 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
-M115 /Z P1 F10 ;moves down in Z until the touch plate is hit
+M115 /Z P#9700 F10 ;moves down in Z until the touch plate is hit
 
 ;g92 z#113 ;sets z zero position
 
@@ -64,16 +64,16 @@ G90 ;goes back to absolute position
 n100
 ;X position
 ;X Minus
-M115 /x P6 F#108 ;Moves X Minus to side of plate
+M115 /x P#9700 F#108 ;Moves X Minus to side of plate
 G91 X0.0625 F60 ;moves off of plate
-M115 /x P6 F#115 ;Tap it again
+M115 /x P#9700 F#115 ;Tap it again
 #103=#5021 ; Store the location of where we are on X
 G91 X0.0625 F60 ;moves off of plate
 
 ;X plus
-M116 /x P6 F#108 ;Moves X Minus to side of plate
+M116 /x P#9700 F#108 ;Moves X Minus to side of plate
 G91 X-0.0625 F60 ;moves off of plate
-M116 /x P6 F#115 ;Tap it again
+M116 /x P#9700 F#115 ;Tap it again
 #104=#5021 ; Store the location of where we are on X in machine coordinates
 ;G91 X-0.0625 F60 ;moves off of plate
 
@@ -90,9 +90,9 @@ G90 ;back to absolute
 
 ;Y position
 ;Y Minus
-M115 /y P6 F#108 ;Moves X Minus to side of plate
+M115 /y P#9700 F#108 ;Moves X Minus to side of plate
 G91 Y0.0625 F60 ;moves off of plate
-M115 /y P6 F#115 ;Tap it again
+M115 /y P#9700 F#115 ;Tap it again
 #109=#5021 ; Store the location of where we are on Y
 G91 y[#105/2] ;move to the center of the plate
 g90

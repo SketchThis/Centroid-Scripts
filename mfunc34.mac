@@ -18,11 +18,16 @@ G43H#12000 ;set current height offset to the current tool number
 ;#101=#23503 ;record z axis max travel
 #23503=-99 ; set travel to we can reach touch off plate
 
-#100=#151;touch off disance above spoilboard
+#100=#9713;touch off disance above spoilboard
 
-G28 G91 Z0 X0 Y0 ;goto touch plate location. Ignores U/A axis
+
+IF #9708 EQ -1 THEN GOTO 1100
+IF #9709 EQ -1 THEN GOTO 1100
+
+G53 X#9708 Y#9709 ;go to where the touch plate is
+
 ;IF #4120 EQ 99 THEN m200 "adjust for laser"
-IF #4120 EQ 99 THEN g91 x#158 y#159 
+IF #4120 EQ #9718 THEN g91 x#9715 y#9716 
 g90 ;go back to absolute
 
 ;g53 z-3
@@ -35,32 +40,23 @@ n101
 ;n103
 ;m225 #100 "magnet not on plate"
 
-M115 /Z P4 F30 ;moves down in Z until the touch plate is hit
+M115 /Z P#9706 F30 ;moves down in Z until the touch plate is hit
 G91 z0.25 F60 ;moves up a bit so we can hit the switch again in incremental mode
 G90 ;goes back to absolute position
-M115 /Z P4 F10 ;moves down in Z until the touch plate is hit
-#101=[#5023 - #151]; this should be the tool length to the spoilboard 5023 is machine coordinate of Z axis
-IF #4120 EQ 99 THEN #101=[#5023 - #151 + #157] ;this adds a little height for the laser focus 157 is where the nozzle gap is stored
+M115 /Z P#9706 F5 ;moves down in Z until the touch plate is hit
+#101=[#5023 - #9713]; this should be the tool length to the spoilboard 5023 is machine coordinate of Z axis
+IF #4120 EQ #9718 THEN #101=[#5023 - #9713 + #9717] ;this adds a little height for the laser focus 157 is where the nozzle gap is stored
 g00 G53 z0; This brings us back up to the highest Z can go so we don't smash up a bit
 #10000=#101 ;Set's tool height for active tool
 
 ;Clenup tool heights for tools that aren't installed
-IF #4120 EQ 99 THEN GOTO 1000
-IF [#4120 NE 1] THEN #10001=0
-IF [#4120 NE 2] THEN #10002=0
-IF [#4120 NE 3] THEN #10003=0
-IF [#4120 NE 4] THEN #10004=0
-IF [#4120 NE 5] THEN #10005=0
-IF [#4120 NE 6] THEN #10006=0
-IF [#4120 NE 7] THEN #10007=0
-IF [#4120 NE 8] THEN #10008=0
-IF [#4120 NE 9] THEN #10009=0
-IF [#4120 NE 10] THEN #10010=0
-IF [#4120 NE 11] THEN #10011=0
-IF [#4120 NE 12] THEN #10012=0
-;IF [#4120 NE 99] THEN #10012=0
+#110=0 ;starting tool height for zeroing
+
+
 
 ;#25503=#101 ; restore z axis travel
-
+goto 1200
 N1000 
-
+n1100
+m200 "Your touch plate location isn't calibrated.\nPlease run the touch plate calibration utility"
+n1200

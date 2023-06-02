@@ -12,8 +12,8 @@ IF #4201 || #4202 THEN GOTO 1100 ;Skip macro if graphing or searching
 
 N100  
 g43 H #4120 ; changes the offset to the requested tool
-IF [#4120 EQ 99] GOTO 999 ;enables laser (tool 99 is laser)   
-IF [#4120 NE 99] GOTO 1000 ;disables laser if we're going to a different tool                      
+IF [#4120 EQ #9718] GOTO 999 ;enables laser (tool 99 is laser)   
+IF [#4120 NE #9718] GOTO 1000 ;disables laser if we're going to a different tool                      
 N150  
 M5; make sure the spindle is off!
 
@@ -27,8 +27,8 @@ M5; make sure the spindle is off!
 m109/1 ;disable feedrate override
 
 
-IF [#150 EQ #4120] GOTO 1100 ;skips tool change if we're asking for the same tool
-IF #10000 NE 0 THEN GOTO 1100 ;skip tool change if tool already has a measurment (for switching back and forth from laser)
+IF [#150 EQ #4120] GOTO 1200 ;skips tool change if we're asking for the same tool
+IF #10000 NE 0 THEN GOTO 1200 ;skip tool change if tool already has a measurment (for switching back and forth from laser)
 
 g53 z0 ;bring z all the way up
 T #4120 ;sets tool number to the requested tool
@@ -40,7 +40,10 @@ G43 H#4120 ;set tool height to current tool
 ;#106=#2400 ;record CSR angle for active WCS
 
 m200 "Press cycle start to head over to the tool change location"
-G28 G91 Z0 X0 Y0 ;goto touch plate location. Ignores U/A axis
+IF #9708 EQ -1 THEN GOTO 1100
+IF #9709 EQ -1 THEN GOTO 1100
+
+G53 X#9708 Y#9709 ;go to where the touch plate is
 g90
 
 ;#23501=#103 ;renable minus limit for X
@@ -50,10 +53,18 @@ g90
 
 m200 "Grab your wrenches and change that tool then press CS"
 #10000=0 ;zero the height of the current tool
+
+#110=1
+n120; zero out all over tools
+IF #110 NE #4120 THEN #[10000 + #110]=0 ELSE;Zero's a tool height
+IF #110 NE #9718 THEN #[10000 + #110]=0 ELSE;skip zeroing laser
+#110=#110+1 ;increment the tool number
+IF #110 LE 100 THEN GOTO 120 ELSE; Keep zeroing tools until we get all 100
+
 m34; subroutine that zeros the tool out to the touchoff plate
 m200 "tool measured, press CS to keep cutting"
 #150=#4120 ;sets the new tool as the stored one in a permanant value
-GOTO 1100 ; we're all done here, let's get back to work 
+GOTO 1200 ; we're all done here, let's get back to work 
 ;zero's the height of all other tools just to be neat
 
 
@@ -67,9 +78,9 @@ m84 ;disable air assist because it gets turned on by m3
 ;G64 OFF ;Disable smoothing
 m65 ;deploy laser
 G43 H#4120 ;set tool height to current tool (in this case the laser)
-#150=99 ;set tool number to 99 for laser
+#150=#9718 ;set tool number to 99 for laser
 IF #10000 EQ 0 THEN M34 ELSE ;set laser height if we need to
-goto 1100 ; we're all done here
+goto 1200 ; we're all done here
 
 N1000 ;DISABLE LASER
 S0							 	 ;Turn Laser Off
@@ -80,6 +91,10 @@ G37 OFF							 ;PWM VM OFF (should have already been off but this is just in cas
 m85 			 				 ;retract laser
 Goto 150 ; back to our regularly scheduled tool change
 
-N1100
-;This is the end 
+
+
+goto 1200
+N1100; this is the section that throws an error if your touch off plate isn't calibrated
+m200 "You haven't setup your touch plate location yet\n Please run the touch plate calibration utility first."
+N1200
 m108/1 ;re-enable feedrate override
