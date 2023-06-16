@@ -63,6 +63,12 @@ M91/<SINGLE_MOTOR_AXIS> L1 ;Move y until we hit the prox switch
 ;g91 <SINGLE_MOTOR_AXIS>1.5 ;move ahead 1.5 to avoid touch off plate
 ;M26/<SINGLE_MOTOR_AXIS> ;zero y here
 
+;DO ROTARY STUFF
+M105/A P-2 F6000
+M106/A P2 F6000
+M105/A P-2 F300
+M26/a ; zero rotary 
+
 ;----------------------------------------------------
 ;square and zero gantry 
 ;----------------------------------------------------
@@ -81,7 +87,7 @@ M91/<DUAL_MOTOR_AXIS> L1 ;do the standard x homing on the prox switch
 M26/<DUAL_MOTOR_AXIS> ;zero gantry here
 M26/<SINGLE_MOTOR_AXIS> ;zero gantry here
 M26/z ;zero gantry here
-M26/B ; zero rotary 
+
 
 m108/1 ;re-enable feedrate override
 ;#23501=#100
