@@ -29,7 +29,7 @@ IF #9737 EQ 1 THEN M98 P9100 ELSE M98 P9101
 ;This makes sure that the relays controlling my X1 and X2 axes are turned on before we move
 ;----------------------------------------------------
 N10
-m86 ; enables the stepper on X1 (or y1 depending on setup)
+m88 ; enables the stepper on X1 (or y1 depending on setup)
 
 ;----------------------------------------------------
 ;This will give the operator a chance to manually move the machine closer to home
@@ -77,17 +77,17 @@ M26/a ; zero rotary
 ;----------------------------------------------------
 ;square and zero gantry 
 ;----------------------------------------------------
-m105/<DUAL_MOTOR_AXIS> p2 f60 ;hit the x1 prox switch ;goes a little faster in case you are way down the table
-m106/<DUAL_MOTOR_AXIS> p-2 f10 ;moves the stepper on X1 off the its prox switch.
-m105/<DUAL_MOTOR_AXIS> p2 f25 ;hit the x1 prox switch
-m66 ; disables the stepper on X1
-m103/1 ;wait one second to see if we hit the prox switch 
-m106/<DUAL_MOTOR_AXIS> p-3 f10 ;moves the stepper on X2 off the its prox switch. (in case we are on it)
-m105/<DUAL_MOTOR_AXIS> p3 f25 ;move back in to hit the x2 prox switch
+m105/<DUAL_MOTOR_AXIS> p3 f60 ;hit the x1 prox switch ;goes a little faster in case you are way down the table
+m106/<DUAL_MOTOR_AXIS> p-3 f10 ;moves the stepper on X1 off the its prox switch.
+m105/<DUAL_MOTOR_AXIS> p3 f25 ;hit the x1 prox switch
+m68 ; disables the stepper on X1
+m103/3 ;wait one second to see if we hit the prox switch 
+m106/<DUAL_MOTOR_AXIS> p-2 f10 ;moves the stepper on X2 off the its prox switch. (in case we are on it)
+m105/<DUAL_MOTOR_AXIS> p2 f25 ;move back in to hit the x2 prox switch
 m104 ;cancel previous timer
-m86 ; enables the stepper on X1
-m106/<DUAL_MOTOR_AXIS> p-2 f10 ;moves the stepper on X1 off the its prox switch.
-m106/<DUAL_MOTOR_AXIS> p-3 f10 ;moves the stepper on X2 off the its prox switch.
+m88 ; enables the stepper on X1
+m106/<DUAL_MOTOR_AXIS> p-3 f10 ;moves the stepper on X1 off the its prox switch.
+m106/<DUAL_MOTOR_AXIS> p-2 f10 ;moves the stepper on X2 off the its prox switch.
 M91/<DUAL_MOTOR_AXIS> L1 ;do the standard x homing on the prox switch
 M26/<DUAL_MOTOR_AXIS> ;zero gantry here
 M26/<SINGLE_MOTOR_AXIS> ;zero gantry here
