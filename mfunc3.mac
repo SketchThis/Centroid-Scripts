@@ -7,8 +7,8 @@ IF #4202 || #4201 THEN GOTO 200 ;skip if in job search mode
 ;IF #4120 EQ 99 THEN GOTO 200 ;skip if using laser
 ;M95 /2 ;NOT SURE WHAT THIS IS SO I TURNED IT OFF
 M94 /1 ;enable SpinFWD
-IF #4120 EQ #9718 THEN m64 ;turn on air assist  if on tool 99
-IF #4120 EQ #9718 THEN m61 ;turn down draft if on tool 99
+IF #4120 EQ 99 THEN m64 ;turn on air assist  if on tool 99
+IF #4120 EQ 99 THEN m61 ;turn down draft if on tool 99
 
 ;#23503=[#10000 - .06] ; sets so the tool can dig into the table a bit.
 m108/1; enables feedrate override

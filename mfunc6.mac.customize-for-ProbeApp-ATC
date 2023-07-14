@@ -1,0 +1,87 @@
+;------------------------------------------------------------------------------
+; File     : mfunc6.mac - to be used with ProbeApp ATC Module
+; Purpose  : ATC Tool change macro for CNC12 using ProbeApp ATC module
+;
+; Usage    : The section required for the ProbeApp - ATC Module are between the ### lines
+;            Add additional commands if needed for your Tool Change
+; Author   : -swissi
+; Date     : 15 May 2021
+;------------------------------------------------------------------------------
+
+IF #50001                          ;Force lookahead to stop processing 
+IF #4201 || #4202 THEN GOTO 10000  ;Skip when graphing or searching
+
+;------------------------------------------------------------------------------
+; Turn Off Spindle 
+;------------------------------------------------------------------------------
+M5                 
+
+;------------------------------------------------------------------------------
+; Add Commands here that need to happen before getting Tool from ATC
+;------------------------------------------------------------------------------
+; Turn off Stuff: Coolant (M9), Mist (M8) etc.
+; Add Command for Automatic Dust Boot Parking if needed
+
+;------------------------------------------------------------------------------
+; Save XYZ Positions for machine to return to after Tool Retrieval
+; Activate this Section if wanted. You need to activate also the Return at the end
+;------------------------------------------------------------------------------
+If #50001
+;#101 = #5021
+;#102 = #5022
+;#103 = #5023
+
+;##############################################################################
+;------------------------------------------------------------------------------
+; Start of Section required for ProbeApp - ATC Module
+;------------------------------------------------------------------------------
+
+#31998 = #4006    ;Save current G20/G21 mode
+#31997 = #4003    ;Save current G90/G91 mode
+G[#25001]         ;Force Machines Default Unit of Measure 
+
+;------------------------------------------------------------------------------------------
+; Force opening of ProbeApp-Tool Library Manager by Turning on Worklight 
+; Activate these lines if this function is wanted
+;------------------------------------------------------------------------------------------
+;If #61112 != 0 Then #29500 = 12                     ;sets Flag to open ProbeApp-Tool Manager Library
+;If #61112 != 0 Then M58                             ;opens ProbeApp-Tool Manager Library
+
+If #50001
+G65 "c:\cncm\probing\ATC_return_tool.cnc"            ;will return tool in spindle if needed
+If #50001
+G65 "c:\cncm\probing\ATC_get_tool.cnc"               ;will retrieve the requested tool
+
+;------------------------------------------------------------------------------------------
+; Activate an automated Tool Height Offset Measurement Cycle with TT at fix Location 
+; if the requested Tool has no Height Offset set in the Tool Offset Library.
+;------------------------------------------------------------------------------------------
+If #[10000+#[12000+[#4120]]] == 0 Then #29500 = 40  ;sets Flag for Auto Tool Height Offset Measurement
+If #[10000+#[12000+[#4120]]] == 0 Then M58          ;activates an automated Tool Height Offset Measurement Cycle with fix TT
+
+;------------------------------------------------------------------------------------------
+; Restore G20/G21 and G90/G91 Mode
+;------------------------------------------------------------------------------------------
+If #50001
+G[#31998]  ;Restore G20/G21 mode
+G[#31997]  ;Restore G90/G91 mode
+
+;------------------------------------------------------------------------------
+; End of Section required for ProbeApp - ATC Module
+;------------------------------------------------------------------------------
+;##############################################################################
+
+;------------------------------------------------------------------------------
+; Add Commands here that need to happen after getting Tool from ATC
+;------------------------------------------------------------------------------
+; Add Command to Retrieve parked Dust Boot if needed
+; Add Command to Retract Tool Rack if "Keep Rack Extended" option is used
+
+;------------------------------------------------------------------------------
+; Return to Position where M6 Tool Change command was issued
+; Activate this Section if wanted
+;------------------------------------------------------------------------------
+;G90 G53 Z#103  
+;G53 X#101 Y#102 
+
+N10000     ;End of macro  

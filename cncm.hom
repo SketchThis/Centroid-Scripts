@@ -5,25 +5,31 @@ IF #50010                        ;Prevent lookahead from parsing past here
 ;----------------------------------------------------
 ;Check for swapped axis
 ;----------------------------------------------------
-IF #9737 EQ 1 THEN GOTO 6 ELSE GOTO 8
-N6
+
+
+;IF #9737 EQ 1 THEN GOTO 6 ELSE GOTO 8
+;N6
+O9100
 DEFINE <DUAL_MOTOR_AXIS> X  
 DEFINE <SINGLE_MOTOR_AXIS> Y 
-GOTO 10
+M99
+;GOTO 10
 
 
-IF #9737 EQ 0 THEN GOTO 8 ELSE GOTO 10
-N8
-;DEFINE <DUAL_MOTOR_AXIS> Y  
-;DEFINE <SINGLE_MOTOR_AXIS> X  
-GOTO 10
+;IF #9737 EQ 0 THEN GOTO 8 ELSE GOTO 10
+;N8
+O9101
+DEFINE <DUAL_MOTOR_AXIS> Y  
+DEFINE <SINGLE_MOTOR_AXIS> X 
+M99 
+;GOTO 10
+IF #9737 EQ 1 THEN M98 P9100 ELSE M98 P9101
 
 ;----------------------------------------------------
 ;This makes sure that the relays controlling my X1 and X2 axes are turned on before we move
 ;----------------------------------------------------
 N10
-m95/114 ; enables the stepper on X2
-m95/113 ; enables the stepper on X1
+m86 ; enables the stepper on X1 (or y1 depending on setup)
 
 ;----------------------------------------------------
 ;This will give the operator a chance to manually move the machine closer to home
@@ -53,15 +59,14 @@ N320
 ;----------------------------------------------------
 ;And finally...we home
 ;----------------------------------------------------
-
+m106/z p2 f60 ;hit the z prox switch ;goes a little faster in case you are way down 
+m105/z p-2 f60 ;gets off z prox
 M92/Z L1 ;Move z up until we hit the prox switch
-;M26/Z ;Zero z here
+
 m105/<SINGLE_MOTOR_AXIS> p2 f60 ;hit the y1 prox switch ;goes a little faster in case you are way down the table
 m106/<SINGLE_MOTOR_AXIS> p-2 f60 ;hit the y1 prox switch ;goes a little faster in case you are way down the table
 M91/<SINGLE_MOTOR_AXIS> L1 ;Move y until we hit the prox switch
-;M26/<SINGLE_MOTOR_AXIS> ;zero y here temporarily so we don't trigger a travel limit (if machine was homed from a weird position)
-;g91 <SINGLE_MOTOR_AXIS>1.5 ;move ahead 1.5 to avoid touch off plate
-;M26/<SINGLE_MOTOR_AXIS> ;zero y here
+
 
 ;DO ROTARY STUFF
 M105/A P-2 F6000

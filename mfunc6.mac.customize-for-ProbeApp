@@ -1,0 +1,62 @@
+;------------------------------------------------------------------------------
+; File     : mfunc6.mac - to be customized for use with ProbeApp and/or Fusion 360 Post Processor with enhanced Features
+; Purpose  : Tool change macro for Acorn CNC12 - Extended Information Diplay and ProbeApp support
+;
+; Usage    : Customize the sections below to your needs
+;            Requires -swissi's Fusion 360 Post Processor Property "Write CNC12 Info Variables" to be enabled for extended Info Display
+;            Requires -swissi's ProbeApp to integrate extensive Probing Functionality into the M6 Tool Change
+; Author   : -swissi
+; Date     : 15 April 2021
+;------------------------------------------------------------------------------
+
+IF #50001                         			;Force lookahead to stop processing 
+IF #4201 || #4202 THEN GOTO 1000   			;Skip when graphing or searching
+#101 = 0                                    ;wait for Tool Change be confirmed with Cycle Start
+
+;------------------------------------------------------------------------------
+; Turn Off Spindle
+;------------------------------------------------------------------------------
+M5                                   
+
+;------------------------------------------------------------------------------
+; Display Tool Change Message (uncomment your selection below)
+;------------------------------------------------------------------------------
+IF #50001									;Force lookahead to stop processing                          			
+
+;Default
+M225 #101 "#)Insert Tool #%.0f\nD:%.3f    H:%.3f\n\nPress Cycle Start to continue" #4120 #[11000 + #4120] #[10000 + #4120]
+
+;use this for extended Info display when using -swissi's Fusion 360 Post Processor Property "Write CNC12 Variables"
+;M225 #101 "#)Insert Tool #%.0f\n\nCNC12: T%.0f  D=%.3f  Height-Offset=%.3f\nFusion : %s\n%s\n\nFlutes=%s  Spindle Speed=%s %s  Cooling=%s\n\nWOC=%s  DOC=%s  Feed per Tooth=%s  Feed per Rev=%s\n\nFeed=%s  Ramp=%s  Plunge=%s\n\n      Press Cycle Start to continue\n" #4120 #4120 #[11000 + #4120] #[10000 + #4120] #330 #314 #311 #315 #316 #312 #317 #318 #320 #323 #319 #321 #322
+
+;------------------------------------------------------------------------------
+; ProbeApp Support Section. Customize Examples as needed 
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; Always open ProbeApp after Tool Change 
+; (set #29500 to the Cycle the ProbeApp should directly open with)
+;------------------------------------------------------------------------------
+;#29500 = 12   ; Overwrites Startup Parameter for ProbeApp:
+;                0=Main Menu, 1=Angle, 2=Bore, 3=BorePlate, 4=Boss, 5=CornerPlate, 6=Cube, 7=InCor, 8=InCorPlate
+;                9=OutCor, 10=Single, 11=Slot, 12=ToolOffsetter, 13=ToolSetter, 14=TripleCorner, 15=Web
+;M58           ; Open ProbeApp                     
+
+;------------------------------------------------------------------------------------------
+; Use with Spindle that requires Tool Touch Off after each Tool Change
+; Opens the ProbeApp-ToolSetter by Default
+; If Heigh Offset of current Tool is not 0, it will open the ProbeApp-ToolOffsetter 
+;------------------------------------------------------------------------------------------
+;#29500 = 13  ;sets Flag to open ProbeApp-ToolSetter by Default
+;If #[10000+#[12000+[#4120]]] != 0 Then #29500 = 12  ;sets Flag to open ProbeApp-ToolOffsetter if Height Offset of current Tool is not 0
+;M58  ;opens ProbeApp
+
+;------------------------------------------------------------------------------------------
+; Use with Machines that have fix Tool Holding and are using the Tool Height Offset Library
+; Provides Automated Tool Height Offset Measurements with TT at fix Location
+; Will activate an automated Tool Height Offset Measurement Cycle if current Tool Height Offset in Library is 0
+;------------------------------------------------------------------------------------------
+;If #[10000+#[12000+[#4120]]] == 0 Then #29500 = 40  ;sets Flag for Auto Tool Height Offset Measurement
+;If #[10000+#[12000+[#4120]]] == 0 Then M58          ;activates an automated Tool Height Offset Measurement Cycle with fix TT
+
+N1000 ;End of macro  
