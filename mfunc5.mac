@@ -4,6 +4,6 @@
 ;-------
 
 m84 ;Turn off air assist
-m81 ; turn off downdraft
+
 M95 /1/2
 ;#23503=#10000; this sets the Z travel distance so that the tool can't be jogged into the table.

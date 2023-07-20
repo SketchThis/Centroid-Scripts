@@ -48,7 +48,7 @@ M115 /Z P#9706 F5 ;moves down in Z until the touch plate is hit
 IF #4120 EQ #9718 THEN #101=[#5023 - #9713 + #9717] ;this adds a little height for the laser focus 157 is where the nozzle gap is stored
 g00 G53 z0; This brings us back up to the highest Z can go so we don't smash up a bit
 #10000=#101 ;Set's tool height for active tool
-
+;#10010=#101 ;sets the probe tool height too.
 ;Clenup tool heights for tools that aren't installed
 #110=0 ;starting tool height for zeroing
 

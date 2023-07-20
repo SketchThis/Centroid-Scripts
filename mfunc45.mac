@@ -21,7 +21,7 @@ IF #111 EQ 2 THEN GOTO 220 ELSE
 Goto 200
 
 N210 ;we're on top of the material
-G92 Z-#157
+G92 Z-#9717
 goto 1000
 
 N220
